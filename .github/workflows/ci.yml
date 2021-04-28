@@ -1,5 +1,6 @@
-name: CI
+# name: CI
 
+ 
 on:
   pull_request:
     branches:
@@ -8,10 +9,6 @@ on:
   push:
     branches:
       - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Kibana
@@ -82,3 +79,4 @@ jobs:
         with:
           name: ${{ steps.build_zip.outputs.ARTIFACT_NAME }}
           path: ${{ steps.build_zip.outputs.ARTIFACT_PATH }}
+
