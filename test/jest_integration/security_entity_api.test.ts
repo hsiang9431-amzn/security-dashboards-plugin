@@ -44,7 +44,7 @@ describe('start kibana server', () => {
           username: KIBANA_SERVER_USER,
           password: KIBANA_SERVER_PASSWORD,
         },
-        opensearch_security: {
+        opendistro_security: {
           multitenancy: { enabled: true, tenants: { preferred: ['Private', 'Global'] } },
         },
       },
