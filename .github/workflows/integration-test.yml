@@ -12,16 +12,6 @@ jobs:
   tests:
     name: Run integration tests
     runs-on: ubuntu-latest
-    services:
-      elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
-        ports:
-          - "9200:9200"
-          - "9300:9300"
-        env:
-          ES_PLUGIN_URL: https://d3g5vo6xdbdb9a.cloudfront.net/downloads/elasticsearch-plugins/opendistro-security/opendistro-security-1.13.1.0.zip
-          discovery.type: single-node
-        options: --entrypoint "/bin/bash -c 'sh /docker-host/.github/workflows/es-ep.sh'" -v /__w/security-dashboards-plugin/security-dashboards-plugin/:/docker-host
     steps:
       - name: Set up JDK 14
         uses: actions/setup-java@v1
@@ -45,7 +35,7 @@ jobs:
         with:
           path: OpenSearch-Dashboards/plugins/security-dashboards-plugin
           ref: ${{ github.ref }}
-      
+
       - name: Get OpenSearch Dashboards version
         id: osd_version
         run: |
@@ -56,6 +46,11 @@ jobs:
         run: |
           echo "::set-output name=opendistro_version::$(jq -r '.version' ./OpenSearch-Dashboards/plugins/security-dashboards-plugin/package.json | sed 's/[0-9]*$/0/')"
       
+      - name: Run elasticsearch with plugin
+        run: |
+          cd ./OpenSearch-Dashboards/plugins/security-dashboards-plugin/.github/workflows
+          docker-compose up -d
+
       - name: Use OpenSearch Dashboards release commit
         run: |
           cd ./OpenSearch-Dashboards
