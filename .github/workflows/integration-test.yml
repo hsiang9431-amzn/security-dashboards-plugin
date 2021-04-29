@@ -48,7 +48,7 @@ jobs:
       
       - name: Run elasticsearch with plugin
         run: |
-          cd ./OpenSearch-Dashboards/plugins/security-dashboards-plugin/.github/workflows
+          cd ./OpenSearch-Dashboards/plugins/security-dashboards-plugin/test/es
           docker-compose up -d
           
       - name: Use OpenSearch Dashboards release commit
