@@ -49,7 +49,7 @@ jobs:
       - name: Run OpenSearch with plugin
         run: |
           cd ./OpenSearch-Dashboards/plugins/security-dashboards-plugin/test/docker
-          docker-compose up -d
+          docker-compose up
           
       - name: Use OpenSearch Dashboards release commit
         run: |

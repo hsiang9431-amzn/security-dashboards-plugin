@@ -4,9 +4,10 @@ services:
     image: opensearchstaging/opensearch:1.0.0-beta1
     ports:
       - "9200:9200"
-      - "9300:9300"
+      - "9600:9600"
     entrypoint: /bin/bash -c "sh /docker-host/os-ep.sh"
     volumes:
       - ./:/docker-host
     environment:
       - discovery.type=single-node
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m' 
