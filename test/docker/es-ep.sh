@@ -1,8 +1,6 @@
-yes | elasticsearch-plugin install ${ES_PLUGIN_URL}
+# allow changing config over api
+# This is needed for Kibana integratoin tests
+echo "opendistro_security.unsupported.restapi.allow_securityconfig_modification: true" >> config/opensearch.yml
+echo "discovery.type: single-node" >> config/opensearch.yml
 
-chmod +x plugins/opendistro_security/tools/install_demo_configuration.sh
-yes | plugins/opendistro_security/tools/install_demo_configuration.sh
-
-echo "opendistro_security.unsupported.restapi.allow_securityconfig_modification: true" >> /usr/share/elasticsearch/config/elasticsearch.yml
-
-su -c "elasticsearch" -s /bin/bash elasticsearch
+bin/opensearch

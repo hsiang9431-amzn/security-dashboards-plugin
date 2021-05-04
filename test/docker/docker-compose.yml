@@ -1,13 +1,12 @@
 version: "3.9"
 services:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+  opensearch:
+    image: opensearchstaging/opensearch:1.0.0-beta1
     ports:
       - "9200:9200"
       - "9300:9300"
-    entrypoint: /bin/bash -c "sh /docker-host/es-ep.sh"
+    entrypoint: /bin/bash -c "sh /docker-host/os-ep.sh"
     volumes:
       - ./:/docker-host
     environment:
-      - ES_PLUGIN_URL=https://d3g5vo6xdbdb9a.cloudfront.net/downloads/elasticsearch-plugins/opendistro-security/opendistro-security-1.13.1.0.zip
       - discovery.type=single-node
