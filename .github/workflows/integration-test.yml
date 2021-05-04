@@ -13,16 +13,6 @@ jobs:
     name: Run integration tests
     runs-on: ubuntu-latest
     steps:
-      - name: Run OpenSearch with plugin
-        run: |
-          docker build -t opensearch-test:1.0.0-beta1 -<<EOF
-          FROM opensearchstaging/opensearch:1.0.0-beta1
-          RUN echo "opendistro_security.unsupported.restapi.allow_securityconfig_modification: true" >> config/opensearch.yml
-          RUN echo "discovery.type: single-node" >> config/opensearch.yml
-          ENTRYPOINT bin/opensearch
-          EOF
-          docker run -d -p 9200:9200 -p 9600:9600 -i opensearch-test:1.0.0-beta1
-          
       - name: Checkout OpenSearch Dashboard
         uses: actions/checkout@v2
         with:
@@ -41,15 +31,21 @@ jobs:
           path: OpenSearch-Dashboards/plugins/security-dashboards-plugin
           ref: ${{ github.ref }}
 
-      - name: Check OpenSearch Running
-        continue-on-error: true
-        run: curl -XGET https://localhost:9200 -u 'admin:admin' -k
-
       - name: Get OpenSearch Dashboards version
         id: osd_version
         run: |
           echo "::set-output name=osd_version::$(jq -r '.opensearchDashboards.version' ./OpenSearch-Dashboards/plugins/security-dashboards-plugin/package.json)"
       
+      - name: Run OpenSearch with plugin
+        run: |
+          docker build -t opensearch-test:${{ steps.osd_version.outputs.osd_version }} -<<EOF
+          FROM opensearchstaging/opensearch:${{ steps.osd_version.outputs.osd_version }}
+          RUN echo "opendistro_security.unsupported.restapi.allow_securityconfig_modification: true" >> config/opensearch.yml
+          RUN echo "discovery.type: single-node" >> config/opensearch.yml
+          ENTRYPOINT bin/opensearch
+          EOF
+          docker run -d -p 9200:9200 -p 9600:9600 -i opensearch-test:${{ steps.osd_version.outputs.osd_version }}
+          
       - name: Check OpenSearch Dashboards release tag
         run: |
           cd ./OpenSearch-Dashboards
