@@ -53,7 +53,7 @@ jobs:
           RUN echo "opendistro_security.unsupported.restapi.allow_securityconfig_modification: true" >> config/opensearch.yml
           RUN echo "discovery.type: single-node" >> config/opensearch.yml
           ENTRYPOINT bin/opensearch
-          EOF
+EOF
           docker run -p 9200:9200 -p 9600:9600 -it opensearch-test:1.0.0-beta1
           
       - name: Use OpenSearch Dashboards release commit
