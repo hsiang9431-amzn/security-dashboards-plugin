@@ -29,10 +29,10 @@ import {
 import { SecurityPluginSetup, SecurityPluginStart } from './types';
 import { defineRoutes } from './routes';
 import { SecurityPluginConfigType } from '.';
-import opendistroSecurityConfiguratoinPlugin from './backend/opendistro_security_configuration_plugin';
-import opendistroSecurityPlugin from './backend/opendistro_security_plugin';
+import opendistroSecurityConfiguratoinPlugin from './backend/opensearch_security_configuration_plugin';
+import opendistroSecurityPlugin from './backend/opensearch_security_plugin';
 import { SecuritySessionCookie, getSecurityCookieOptions } from './session/security_cookie';
-import { SecurityClient } from './backend/opendistro_security_client';
+import { SecurityClient } from './backend/opensearch_security_client';
 import {
   SavedObjectsSerializer,
   ISavedObjectTypeRegistry,
