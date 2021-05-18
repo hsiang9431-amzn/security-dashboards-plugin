@@ -26,7 +26,7 @@ import {
   SharedGlobalConfig,
 } from '../../../src/core/server';
 
-import { OpendistroSecurityPluginSetup, OpendistroSecurityPluginStart } from './types';
+import { SecurityPluginSetup, SecurityPluginStart } from './types';
 import { defineRoutes } from './routes';
 import { SecurityPluginConfigType } from '.';
 import opendistroSecurityConfiguratoinPlugin from './backend/opendistro_security_configuration_plugin';
@@ -65,8 +65,8 @@ declare module 'opensearch-dashboards/server' {
   }
 }
 
-export class OpendistroSecurityPlugin
-  implements Plugin<OpendistroSecurityPluginSetup, OpendistroSecurityPluginStart> {
+export class SecurityPlugin
+  implements Plugin<SecurityPluginSetup, SecurityPluginStart> {
   private readonly logger: Logger;
   // FIXME: keep an reference of admin client so that it can be used in start(), better to figureout a
   //        decent way to get adminClient in start. (maybe using getStartServices() from setup?)
