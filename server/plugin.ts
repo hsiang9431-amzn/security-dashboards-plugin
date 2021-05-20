@@ -29,8 +29,8 @@ import {
 import { SecurityPluginSetup, SecurityPluginStart } from './types';
 import { defineRoutes } from './routes';
 import { SecurityPluginConfigType } from '.';
-import opendistroSecurityConfiguratoinPlugin from './backend/opensearch_security_configuration_plugin';
-import opendistroSecurityPlugin from './backend/opensearch_security_plugin';
+import opensearchSecurityConfiguratoinPlugin from './backend/opensearch_security_configuration_plugin';
+import opensearchSecurityPlugin from './backend/opensearch_security_plugin';
 import { SecuritySessionCookie, getSecurityCookieOptions } from './session/security_cookie';
 import { SecurityClient } from './backend/opensearch_security_client';
 import {
@@ -89,7 +89,7 @@ export class SecurityPlugin
     const esClient: ILegacyClusterClient = core.opensearch.legacy.createClient(
       'opendistro_security',
       {
-        plugins: [opendistroSecurityConfiguratoinPlugin, opendistroSecurityPlugin],
+        plugins: [opensearchSecurityConfiguratoinPlugin, opensearchSecurityPlugin],
       }
     );
 
