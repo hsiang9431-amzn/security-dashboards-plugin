@@ -65,7 +65,8 @@ declare module 'opensearch-dashboards/server' {
   }
 }
 
-export class SecurityPlugin implements Plugin<SecurityPluginSetup, SecurityPluginStart> {
+export class SecurityPlugin
+  implements Plugin<SecurityPluginSetup, SecurityPluginStart> {
   private readonly logger: Logger;
   // FIXME: keep an reference of admin client so that it can be used in start(), better to figureout a
   //        decent way to get adminClient in start. (maybe using getStartServices() from setup?)

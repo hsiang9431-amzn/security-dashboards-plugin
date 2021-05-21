@@ -62,7 +62,8 @@ const APP_ID_DASHBOARDS = 'dashboards';
 const APP_ID_OPENSEARCH_DASHBOARDS = 'kibana';
 const APP_LIST_FOR_READONLY_ROLE = [APP_ID_HOME, APP_ID_DASHBOARDS, APP_ID_OPENSEARCH_DASHBOARDS];
 
-export class SecurityPlugin implements Plugin<SecurityPluginSetup, SecurityPluginStart> {
+export class SecurityPlugin
+  implements Plugin<SecurityPluginSetup, SecurityPluginStart> {
   // @ts-ignore : initializerContext not used
   constructor(private readonly initializerContext: PluginInitializerContext) {}
 
