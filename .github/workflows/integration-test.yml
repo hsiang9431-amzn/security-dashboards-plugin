@@ -4,6 +4,12 @@ on:
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - '*.md'
+      - '*.txt'
+      - 'release-notes/**'
+      - 'THIRD-PARTY'
+      - 'LICENSE'
   push:
     branches:
       - main
