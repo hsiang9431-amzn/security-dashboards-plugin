@@ -28,7 +28,7 @@ module.exports = {
         '@osd/eslint/require-license-header': [
           'error',
           {
-            license: [LICENSE_HEADER],
+            license: LICENSE_HEADER,
           },
         ],
         "no-console": 0
