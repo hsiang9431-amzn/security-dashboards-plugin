@@ -59,6 +59,7 @@ jobs:
           cd ./OpenSearch-Dashboards
           yarn osd bootstrap --oss
       - name: Run lint
+        continue-on-error: true
         run: |
           cd ./OpenSearch-Dashboards/plugins/security-dashboards-plugin
           yarn lint
