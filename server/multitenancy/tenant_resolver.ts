@@ -37,27 +37,35 @@ export const GLOBAL_TENANTS: string[] = ['global', GLOBAL_TENANT_SYMBOL];
 export function resolveTenant(
   request: OpenSearchDashboardsRequest,
   username: string,
+  roles: string[] | undefined,
   availabeTenants: any,
   config: SecurityPluginConfigType,
   cookie: SecuritySessionCookie
 ): string | undefined {
+  const DEFAULT_READONLY_ROLES = ['kibana_read_only'];
   let selectedTenant: string | undefined;
-  const query: any = request.url.query as any;
-  if (query && (query.security_tenant || query.securitytenant)) {
-    selectedTenant = query.security_tenant ? query.security_tenant : query.securitytenant;
-  } else if (request.headers.securitytenant || request.headers.security_tenant) {
+  const securityTenant_ = request?.url?.searchParams?.get('securityTenant_');
+  const securitytenant = request?.url?.searchParams?.get('securitytenant');
+  if (securityTenant_) {
+    selectedTenant = securityTenant_;
+  } else if (securitytenant) {
+    selectedTenant = securitytenant;
+  } else if (request.headers.securitytenant || request.headers.securityTenant_) {
     selectedTenant = request.headers.securitytenant
       ? (request.headers.securitytenant as string)
-      : (request.headers.security_tenant as string);
+      : (request.headers.securityTenant_ as string);
   } else if (isValidTenant(cookie.tenant)) {
     selectedTenant = cookie.tenant;
   } else {
     selectedTenant = undefined;
   }
+  const isReadonly = roles?.some(
+    (role) => config.readonly_mode?.roles.includes(role) || DEFAULT_READONLY_ROLES.includes(role)
+  );
 
   const preferredTenants = config.multitenancy?.tenants.preferred;
-  const globalTenantEnabled = config.multitenancy?.tenants.enable_global || false;
-  const privateTenantEnabled = config.multitenancy?.tenants.enable_private || false;
+  const globalTenantEnabled = config.multitenancy?.tenants.enable_global;
+  const privateTenantEnabled = config.multitenancy?.tenants.enable_private && !isReadonly;
 
   return resolve(
     username,
